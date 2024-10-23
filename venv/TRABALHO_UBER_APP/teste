@@ -1,0 +1,58 @@
+import requests
+from kivymd.app import MDApp
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.lang import Builder
+
+class UNICEPUber(MDApp):
+    def build(self):
+        self.root = Builder.load_file('main.kv')
+        return self.root
+
+class Principal(Screen):
+    pass
+
+class Corrida(Screen):
+    pass
+
+class SolicitarCorrida(Screen):
+    def solicitar_corrida(self):
+        # API call to request a ride
+        api_url = 'https://developer.uber.com/docs/guest-rides/references/api/v1/guest-trips-post'
+        headers = {'Content-Type': 'application/json'}
+        data = {'pickup_location': 'Your pickup location', 'dropoff_location': 'Your dropoff location'}
+        response = requests.post(api_url, headers=headers, json=data)
+
+        if response.status_code == 200:
+            # Ride requested successfully, switch to the 'corrida' screen
+            self.manager.current = 'corrida'
+        else:
+            # Handle API error
+            print(f'Error requesting ride: {response.text}')
+
+class CancelarCorrida(Screen):
+    def cancelar_corrida_confirm(self):
+        # API call to cancel the ride
+        api_url = 'https://developer.uber.com/docs/guest-rides/references/api/v1/guest-trips-request_id-delete'
+        headers = {'Content-Type': 'application/json'}
+        data = {'ride_id': 'The ID of the ride to cancel'}
+        response = requests.post(api_url, headers=headers, json=data)
+
+        if response.status_code == 200:
+            # Ride canceled successfully, switch to the 'principal' screen
+            self.manager.current = 'principal'
+        else:
+            # Handle API error
+            print(f'Error canceling ride: {response.text}')
+
+class MainScreenManager(ScreenManager):
+    pass
+
+root_widget = Builder.load_file('main.kv')
+
+class UNICEPUberApp(UNICEPUber):
+    def __init__(self, **kwargs):
+        super(UNICEPUberApp, self).__init__(**kwargs)
+
+if __name__ == '__main__':
+    UNICEPUberApp().run()

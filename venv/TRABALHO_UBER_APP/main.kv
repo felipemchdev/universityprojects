@@ -1,0 +1,92 @@
+ScreenManager:
+    TelaPrincipal:
+    TelaCorrida:
+    TelaCancelarCorrida:
+    TelaSelecionarLocal:
+
+    TelaPrincipal:
+        name: 'principal'
+        MDBoxLayout:
+            orientation: 'vertical'
+            MDToolbar:
+                title: 'UNICEP Uber'
+                md_bg_color: app.theme_cls.primary_color
+                specific_text_color: app.theme_cls.text_color
+            MDLabel:
+                text: 'Bem-vindo ao UNICEP Uber'
+                halign: 'center'
+                theme_text_color: 'Primary'
+            MDTextField:
+                id: api_request_url
+                hint_text: 'https://developer.uber.com/docs/guest-rides/references/api/v1/guest-trips-post'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                size_hint_x: 0.8
+            MDTextField:
+                id: api_cancel_url
+                hint_text: 'https://developer.uber.com/docs/guest-rides/references/api/v1/guest-trips-request_id-delete'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size_hint_x: 0.8
+            MDRaisedButton:
+                text: 'Solicitar uma Corrida'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                md_bg_color: app.theme_cls.primary_color
+                text_color: app.theme_cls.text_color
+                on_release: app.solicitar_corrida()
+            MDRaisedButton:
+                text: 'Selecionar Local'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                md_bg_color: app.theme_cls.primary_color
+                text_color: app.theme_cls.text_color
+                on_release: app.ir_para_selecionar_local()
+            MDRaisedButton:
+                text: 'Mudar Tema'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                md_bg_color: app.theme_cls.primary_color
+                text_color: app.theme_cls.text_color
+                on_release: app.mudar_tema()
+
+    TelaCorrida:
+        name: 'corrida'
+        MDBoxLayout:
+            orientation: 'vertical'
+            MDToolbar:
+                title: 'Corrida Solicitada'
+                left_action_items: [['arrow-left', lambda x: app.voltar()]]
+                md_bg_color: app.theme_cls.primary_color
+                specific_text_color: app.theme_cls.text_color
+            MDLabel:
+                text: 'Sua corrida foi solicitada!'
+                halign: 'center'
+                theme_text_color: 'Primary'
+            MDRaisedButton:
+                text: 'Cancelar Corrida'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                md_bg_color: app.theme_cls.primary_color
+                text_color: app.theme_cls.text_color
+                on_release: app.cancelar_corrida()
+
+    TelaCancelarCorrida:
+        name: 'cancelar_corrida'
+        MDBoxLayout:
+            orientation: 'vertical'
+            MDToolbar:
+                title: 'Cancelar Corrida'
+                left_action_items: [['arrow-left', lambda x: app.voltar()]]
+                md_bg_color: app.theme_cls.primary_color
+                specific_text_color: app.theme_cls.text_color
+            MDLabel:
+                text: 'Você tem certeza que deseja cancelar a corrida?'
+                halign: 'center'
+                theme_text_color: 'Primary'
+            MDRaisedButton:
+                text: 'Sim, cancelar'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                md_bg_color: app.theme_cls.primary_color
+                text_color: app.theme_cls.text_color
+                on_release: app.cancelar_corrida_confirm()
+            MDRaisedButton:
+                text: 'Não, voltar'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                md_bg_color: app.theme_cls.primary_color
+                text_color: app.theme_cls.text_color
+                on_release: app
